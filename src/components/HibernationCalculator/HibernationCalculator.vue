@@ -2,22 +2,27 @@
 	<div class="row">
 		<div class="col">
 			<div class="card">
-				<HibernationCalculatorCardTitle animalSpecies="EMYS ORBICULARIS" />
-				<HibernationCalculatorCardBody />
+				<HibernationCalculatorTitleCard />
+				<HibernationCalculatorFormCard />
 			</div>
 		</div>
+	</div>
+	<div>
+		<HibernationCalculatorResultCard />
 	</div>
 </template>
 
 <script>
-import HibernationCalculatorCardTitle from './HibernationCalculatorCardTitle.vue';
-import HibernationCalculatorCardBody from './HibernationCalculatorCardBody.vue';
+import HibernationCalculatorTitleCard from './HibernationCalculatorTitleCard.vue';
+import HibernationCalculatorFormCard from './HibernationCalculatorFormCard.vue';
+import HibernationCalculatorResultCard from './HibernationCalculatorResultCard.vue';
 
 export default {
 	name: "HibernationCalculator",
 	components: {
-		HibernationCalculatorCardTitle,
-		HibernationCalculatorCardBody
+		HibernationCalculatorTitleCard,
+		HibernationCalculatorFormCard,
+		HibernationCalculatorResultCard
 	}
 };
 </script>

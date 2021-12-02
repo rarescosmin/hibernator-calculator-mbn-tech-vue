@@ -7,9 +7,12 @@
 
 <script>
 export default {
-    name: 'HibernationCalculatorCardTitle',
+    name: 'HibernationCalculatorTitleCard',
     props: {
-        animalSpecies: String
+        animalSpecies: {
+            type: String,
+            default: 'EMYS ORBICULARIS'
+        }
     }
 }
 </script>

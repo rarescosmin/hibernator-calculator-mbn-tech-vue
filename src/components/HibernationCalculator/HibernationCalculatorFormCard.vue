@@ -9,19 +9,29 @@
                 <label for="defaultWeight">Weight before hibernation (g)</label>
                 <input type="number" step="0.001" id="defaultWeight" class="form-control" aria-label="Weight before hibernation (g)" required />
             </div>
-            <HibernationCalculatorComputeButton />
+            <button 
+                class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" 
+                type="submit" 
+                id="defaultSubmit" 
+                @click="computeButtonHandler()">
+                COMPUTE
+            </button>
         </form>
     </div>
 </template>
 
 <script>
-import HibernationCalculatorComputeButton from './HibernationCalculatorComputeButton.vue';
-
+/**
+ * Handler for the 'Compute' button 
+ */
+const computeButtonHandler = () => {
+    console.log('compute!');
+}
 
 export default {
-    name: 'HibernationCalculatorCardBody',
-    components: {
-        HibernationCalculatorComputeButton
+    name: 'HibernationCalculatorFormCard',
+    methods: {
+        computeButtonHandler
     }
 }
 </script>
