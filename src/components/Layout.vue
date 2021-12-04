@@ -9,6 +9,6 @@ export default {
     name: 'Layout',
     components: {
     HibernationCalculator,
-  },
+  }
 }
 </script>
