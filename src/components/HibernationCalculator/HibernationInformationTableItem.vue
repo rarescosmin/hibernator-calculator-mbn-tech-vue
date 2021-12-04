@@ -11,8 +11,8 @@
     <td>
         <span
             style="color: red"
-            @click="removeTableElement">
-            <i class="fas fa-trash-alt"></i>
+            @click="onRemoveElement">
+            <i class="fas fa-trash-alt" style="cursor: pointer"></i>
         </span>
     </td>
 </template>
@@ -21,6 +21,12 @@
 <script>
 export default {
     name: 'HibernationInformationTableItem',
+    methods: {
+        onRemoveElement() {
+            this.$emit('remove-table-element', this.uuid);
+        }
+    },
+    emits: ['remove-table-element'],
     props: {
         index: {
             type: Number
@@ -48,6 +54,9 @@ export default {
         },
         removeTableElement: {
             type: Function
+        },
+        uuid: {
+            type: String
         }
     }
 }

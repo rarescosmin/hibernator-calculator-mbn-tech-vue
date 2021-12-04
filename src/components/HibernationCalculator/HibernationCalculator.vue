@@ -10,6 +10,7 @@
         <div class="col-1"></div>
         <HibernationInformationTable 
             @clear-all="clearAll"
+            @remove-table-element="onRemoveTableElement"
             :hibernationInformationTableData="hibernationInformationTableData"/>
     </div>
 </template>
@@ -35,11 +36,19 @@ export default {
             hibernationInformationTableData: []
         }
     },
+    created() {
+        const localStorage = JSON.parse(window.localStorage.getItem('measurements_data'));
+
+        if (Object.keys(localStorage).length > 0) {
+            Object.keys(localStorage).forEach((item, indexKey) => {
+                console.log('logging key value pairs');
+                console.log(indexKey, item, localStorage[item]);
+                this.hibernationInformationTableData.push({ ...localStorage[item], indexKey });
+            });
+        }
+    },
 	methods: {
 		computeButtonHandler(animalInformation) {
-			console.log('compute event emitted! ');
-            console.log(animalInformation);
-
             const length = animalInformation.length;
             const weight = animalInformation.weight;
 
@@ -56,16 +65,7 @@ export default {
                 min, max, avg, result, length, weight,
             });
 
-            console.log(`item`);
-            console.log(item);
-            console.log(`indexKey ${indexKey}`);
-
-            console.log('hibernation array !');
             this.hibernationInformationTableData.push({...item, indexKey });
-            console.log(this.hibernationInformationTableData)
-
-            console.log('measurements !');
-            console.log(turtleStore.measurements());
         },
         clearAll() {
             if (Object.keys(turtleStore.measurements()).length > 0) {
@@ -74,6 +74,18 @@ export default {
                     this.hibernationInformationTableData = [];
                 }
             }
+        },
+        onRemoveTableElement(uuid) {
+            turtleStore.remove(uuid);
+            this.syncTableDataWithStore();
+        },
+        syncTableDataWithStore() {
+            turtleStore.syncFromLocalStorage();
+            const measurements = turtleStore.measurements();
+            this.hibernationInformationTableData = [];
+            Object.keys(measurements).forEach((key, indexKey) => {
+                this.hibernationInformationTableData.push({ ...measurements[key], indexKey });
+            });
         }
 	}
 };

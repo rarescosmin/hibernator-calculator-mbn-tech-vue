@@ -23,7 +23,8 @@
                         </thead>
                         <tbody id="defaultResultsTableBody">
                             <tr v-for="tableItem in hibernationInformationTableData" :key="tableItem.uuid">
-                                <HibernationInformationTableItem 
+                                <HibernationInformationTableItem
+                                    @remove-table-element="$emit('remove-table-element', tableItem.uuid)"
                                     :index="tableItem.indexKey"
                                     :length="tableItem.length"
                                     :weight="tableItem.weight"
@@ -31,7 +32,8 @@
                                     :resultText="resultStatusMapperUtils[tableItem.result].text"
                                     :min="parseFloat(tableItem.min).toFixed(3)"
                                     :avg="parseFloat(tableItem.avg).toFixed(3)"
-                                    :max="parseFloat(tableItem.max).toFixed(3)"/>
+                                    :max="parseFloat(tableItem.max).toFixed(3)"
+                                    :uuid="tableItem.uuid"/>
                             </tr>
                         </tbody>
                     </table>
@@ -65,6 +67,6 @@ export default {
             type: Array
         }
     },
-    emits: ['clear-all']
+    emits: ['clear-all', 'remove-table-element']
 }
 </script>
