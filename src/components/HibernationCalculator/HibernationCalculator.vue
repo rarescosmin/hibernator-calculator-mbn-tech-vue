@@ -37,13 +37,12 @@ export default {
         }
     },
     created() {
-        const localStorage = JSON.parse(window.localStorage.getItem('measurements_data'));
+        turtleStore.syncFromLocalStorage();
+        const measurements = turtleStore.measurements();
 
-        if (Object.keys(localStorage).length > 0) {
-            Object.keys(localStorage).forEach((item, indexKey) => {
-                console.log('logging key value pairs');
-                console.log(indexKey, item, localStorage[item]);
-                this.hibernationInformationTableData.push({ ...localStorage[item], indexKey });
+        if (Object.keys(measurements).length > 0) {
+            Object.keys(measurements).forEach((item, indexKey) => {
+                this.hibernationInformationTableData.push({ ...measurements[item], indexKey });
             });
         }
     },
@@ -53,15 +52,15 @@ export default {
             const weight = animalInformation.weight;
 
             
-            let { min, max, avg } = computeFactors(length);
-            let result = testos(length, weight);
+            const { min, max, avg } = computeFactors(length);
+            const result = testos(length, weight);
 
             this.resultText = resultStatusMapper[result].text;
             this.resultLength = length;
             this.resultWeight = weight;
             this.resultTextStyle = [resultStatusMapper[result].panel];
 
-            let { item, indexKey } = turtleStore.add({
+            const { item, indexKey } = turtleStore.add({
                 min, max, avg, result, length, weight,
             });
 
@@ -80,7 +79,6 @@ export default {
             this.syncTableDataWithStore();
         },
         syncTableDataWithStore() {
-            turtleStore.syncFromLocalStorage();
             const measurements = turtleStore.measurements();
             this.hibernationInformationTableData = [];
             Object.keys(measurements).forEach((key, indexKey) => {
