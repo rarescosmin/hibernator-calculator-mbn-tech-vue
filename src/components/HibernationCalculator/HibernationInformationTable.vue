@@ -14,10 +14,26 @@
                                 <th scope="col">Min (g)</th>
                                 <th scope="col">Avg (g)</th>
                                 <th scope="col">Max (g)</th>
-                                <th scope="col"><span style="color: black" @click="onClearAll"><i class="fas fa-trash-alt"></i></span></th>
+                                <th scope="col">
+                                    <span style="color: black" @click="onClearAll">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </span>
+                                </th>
                             </tr>
                         </thead>
-                        <tbody id="defaultResultsTableBody"></tbody>
+                        <tbody id="defaultResultsTableBody">
+                            <tr v-for="tableItem in hibernationInformationTableData" :key="tableItem.uuid">
+                                <HibernationInformationTableItem 
+                                    :index="tableItem.indexKey"
+                                    :length="tableItem.length"
+                                    :weight="tableItem.weight"
+                                    :resultBadgeStyle="[resultStatusMapperUtils[tableItem.result].badge]"
+                                    :resultText="resultStatusMapperUtils[tableItem.result].text"
+                                    :min="parseFloat(tableItem.min).toFixed(3)"
+                                    :avg="parseFloat(tableItem.avg).toFixed(3)"
+                                    :max="parseFloat(tableItem.max).toFixed(3)"/>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -26,12 +42,29 @@
 </template>
 
 <script>
+import HibernationInformationTableItem from './HibernationInformationTableItem.vue';
+import { resultStatusMapper } from '../../utils/utils';
+
 export default {
     name: 'HibernationInformationTable.vue',
+    components: {
+        HibernationInformationTableItem
+    },
+    data() {
+        return {
+            resultStatusMapperUtils: resultStatusMapper
+        }
+    },
     methods: {
         onClearAll() {
             this.$emit('clear-all');
         }
-    }
+    },
+    props: {
+        hibernationInformationTableData: {
+            type: Array
+        }
+    },
+    emits: ['clear-all']
 }
 </script>

@@ -9,7 +9,8 @@
             :resultTextStyle="resultTextStyle"/>
         <div class="col-1"></div>
         <HibernationInformationTable 
-            @clear-all="clearAll"/>
+            @clear-all="clearAll"
+            :hibernationInformationTableData="hibernationInformationTableData"/>
     </div>
 </template>
 
@@ -30,7 +31,8 @@ export default {
             resultText: '',
             resultWeight: null,
             resultLength: null,
-            resultTextStyle: []
+            resultTextStyle: [],
+            hibernationInformationTableData: []
         }
     },
 	methods: {
@@ -54,13 +56,22 @@ export default {
                 min, max, avg, result, length, weight,
             });
 
+            console.log(`item`);
+            console.log(item);
+            console.log(`indexKey ${indexKey}`);
+
+            console.log('hibernation array !');
+            this.hibernationInformationTableData.push({...item, indexKey });
+            console.log(this.hibernationInformationTableData)
+
             console.log('measurements !');
-            console.log(turtleStore.measurements);
+            console.log(turtleStore.measurements());
         },
         clearAll() {
             if (Object.keys(turtleStore.measurements()).length > 0) {
                 if (confirm('Are you sure you want to clear all measurements?\nThis action cannot be undone!')) {
                     turtleStore.clear();
+                    this.hibernationInformationTableData = [];
                 }
             }
         }
