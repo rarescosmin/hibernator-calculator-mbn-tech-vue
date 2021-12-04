@@ -1,9 +1,7 @@
 <template>
     <div class="row" style="margin-top: 4em;">
         <div class="col-1"></div>
-        <div class="col-4">
-            <HibernationCalculatorForm @compute="computeButtonHandler"/>
-        </div>
+        <HibernationCalculatorForm @compute="computeButtonHandler"/>
         <div class="col-1"></div>
         <HibernationInformationTable />
     </div>
