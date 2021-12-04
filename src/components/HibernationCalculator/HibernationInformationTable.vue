@@ -14,7 +14,7 @@
                                 <th scope="col">Min (g)</th>
                                 <th scope="col">Avg (g)</th>
                                 <th scope="col">Max (g)</th>
-                                <th scope="col"><span style="color: black" onclick="clearAll()"><i class="fas fa-trash-alt"></i></span></th>
+                                <th scope="col"><span style="color: black" @click="onClearAll"><i class="fas fa-trash-alt"></i></span></th>
                             </tr>
                         </thead>
                         <tbody id="defaultResultsTableBody"></tbody>
@@ -27,6 +27,11 @@
 
 <script>
 export default {
-    name: 'HibernationInformationTable.vue'
+    name: 'HibernationInformationTable.vue',
+    methods: {
+        onClearAll() {
+            this.$emit('clear-all');
+        }
+    }
 }
 </script>
