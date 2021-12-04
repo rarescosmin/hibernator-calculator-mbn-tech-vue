@@ -1,15 +1,9 @@
 <template>
-    <div class="">
-        <div class="row" style="margin-top: 4em;">
-            <div class="col-1">
-            </div>
-            <HibernationCalculator />
-        </div>
-    </div>
+    <HibernationCalculator />
 </template>
 
 <script>
-import HibernationCalculator from './HibernationCalculator.vue';
+import HibernationCalculator from './HibernationCalculator/HibernationCalculator.vue';
 
 export default {
     name: 'Layout',
