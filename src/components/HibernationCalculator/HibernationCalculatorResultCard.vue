@@ -15,24 +15,19 @@
     <button 
         class="btn btn-outline-warning btn-rounded btn-block my-4 waves-effect z-depth-0 result-post-hidden" 
         type="button"
-        @click="resetButtonHandler()" 
+        @click="resetButtonHandler" 
         id="defaultReset">
         Reset
     </button>
 </template>
 
 <script>
-/**
- * Reset button handler
- */
-const resetButtonHandler = () => {
-    console.log('reset!');
-}
-
 export default {
     name: 'HibernationCalculatorResultCard',
-    methods: {
-        resetButtonHandler
+    props: {
+        resetButtonHandler: {
+            type: Function
+        }
     }
 }
 </script>

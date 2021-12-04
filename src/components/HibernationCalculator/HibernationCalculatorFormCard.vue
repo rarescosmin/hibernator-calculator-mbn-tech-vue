@@ -13,7 +13,7 @@
                 class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" 
                 type="submit" 
                 id="defaultSubmit" 
-                @click="computeButtonHandler()">
+                @click="computeButtonHandler">
                 COMPUTE
             </button>
         </form>
@@ -21,17 +21,13 @@
 </template>
 
 <script>
-/**
- * Handler for the 'Compute' button 
- */
-const computeButtonHandler = () => {
-    console.log('compute!');
-}
 
 export default {
     name: 'HibernationCalculatorFormCard',
-    methods: {
-        computeButtonHandler
+    props: {
+        computeButtonHandler: {
+            type: Function
+        }
     }
 }
 </script>
