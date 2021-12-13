@@ -41,14 +41,34 @@ export default {
     created() {
 
         const web3 = new Web3('http://127.0.0.1:8545');
-        console.log(web3.eth.accounts)
        
         web3.eth.getBalance("0x0ED75BE115c0D28b34A9E2a7EEB41eaCae3e078e", (err, bal) => {
             console.log(bal);
         });
 
         const contract = new web3.eth.Contract(HibernationCalculatorContractInterface.abi, "0x51C5aD37028081C792c6C88E48B371D6ff22390f");
+
+        console.log(contract.methods);
         
+        contract.methods.animalCount().call((err, result) => {
+            console.log('result ' + result);
+        });
+
+        contract.methods.addAnimal(
+            "3dfef05b-0b66-450c-a0c6-d3994866f6d5",
+            BigInt(12000000000000000000),
+            BigInt(11000000000000000000),
+            3,
+            BigInt(257658000000000000000),
+            BigInt(303611000000000000000),
+            BigInt(350494000000000000000)
+        ).send({
+            from: "0x0ED75BE115c0D28b34A9E2a7EEB41eaCae3e078e",
+            gas: 3000000
+        }).then(receipt => {
+            console.log(receipt.events.AnimalAdded);
+        })
+
         contract.methods.animalCount().call((err, result) => {
             console.log('result ' + result);
         });
