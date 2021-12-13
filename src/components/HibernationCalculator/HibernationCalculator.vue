@@ -20,6 +20,8 @@ import HibernationCalculatorForm from './HibernationCalculatorForm.vue';
 import HibernationInformationTable from './HibernationInformationTable.vue';
 import { turtleStore } from '../../store/store';
 import { computeFactors, testos, resultStatusMapper } from '../../utils/utils';
+import Web3 from 'web3';
+import HibernationCalculatorContractInterface from '../../../blockchain/build/contracts/HibernationCalculator.json';
 
 export default {
 	name: "HibernationCalculator",
@@ -37,6 +39,20 @@ export default {
         }
     },
     created() {
+
+        const web3 = new Web3('http://127.0.0.1:8545');
+        console.log(web3.eth.accounts)
+       
+        web3.eth.getBalance("0x0ED75BE115c0D28b34A9E2a7EEB41eaCae3e078e", (err, bal) => {
+            console.log(bal);
+        });
+
+        const contract = new web3.eth.Contract(HibernationCalculatorContractInterface.abi, "0x51C5aD37028081C792c6C88E48B371D6ff22390f");
+        
+        contract.methods.animalCount().call((err, result) => {
+            console.log('result ' + result);
+        });
+
         turtleStore.syncFromLocalStorage();
         const measurements = turtleStore.measurements();
 
