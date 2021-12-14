@@ -124,10 +124,27 @@ export const clearAnimals = async () => {
     await contract.methods.clearAnimals()
     .send({ 
         from: process.env.VUE_APP_WEB3_ACCOUNT,
-        gas: 6721975 
+        gas: 3000000 
     })
     .then(response => {
         console.debug('animals cleared');
+        console.debug(response);
+    });
+};
+
+export const deleteAnimal = async (uuid) => {
+    // get HibernationCalculator contract //
+    const contract = getContract();
+    console.debug('contract obtained');
+    console.debug(contract);
+
+    const deletedAnimalUUID = await contract.methods.deleteAnimal(uuid)
+    .send({
+        from: process.env.VUE_APP_WEB3_ACCOUNT,
+        gas: 3000000
+    })
+    .then(response => {
+        console.debug('animal deleted');
         console.debug(response);
     });
 };

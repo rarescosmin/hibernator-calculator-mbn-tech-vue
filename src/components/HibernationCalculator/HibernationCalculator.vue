@@ -20,7 +20,7 @@ import HibernationCalculatorForm from './HibernationCalculatorForm.vue';
 import HibernationInformationTable from './HibernationInformationTable.vue';
 import { turtleStore } from '../../store/store';
 import { computeFactors, testos, resultStatusMapper } from '../../utils/utils';
-import { getAnimals, addAnimal, clearAnimals } from '../../store/blockchain';
+import { getAnimals, addAnimal, clearAnimals, deleteAnimal } from '../../store/blockchain';
 
 export default {
 	name: "HibernationCalculator",
@@ -144,9 +144,9 @@ export default {
                 }
             }
         },
-        onRemoveTableElement(uuid) {
-            turtleStore.remove(uuid);
-            this.syncTableDataWithStore();
+        async onRemoveTableElement(uuid) {
+            await deleteAnimal(uuid);
+            this.hibernationInformationTableData = await getAnimals();
         },
         syncTableDataWithStore() {
             const measurements = turtleStore.measurements();
