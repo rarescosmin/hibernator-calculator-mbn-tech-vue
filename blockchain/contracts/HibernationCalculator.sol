@@ -70,6 +70,8 @@ contract HibernationCalculator {
     }
 
     function clearAnimals() public {
+        require(animalKeysArray.length > 0, "Can't delete animals");
+        
         for (uint i = 0; i < animalKeysArray.length; i++) {
             deleteAnimal(animalKeysArray[i]);
         }

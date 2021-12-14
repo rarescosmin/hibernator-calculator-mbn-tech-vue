@@ -7,12 +7,12 @@ contract('HibernationCalculator', accounts => {
         contract = await HibernationCalculator.deployed();
     });
 
-    it('deploys successfully with 1 element in the animals mapping', async () => {
-        const animalCount = await contract.animalCount();
-        assert.equal(animalCount.toNumber(), 1);
+    // it('deploys successfully with 1 element in the animals mapping', async () => {
+    //     const animalCount = await contract.animalCount();
+    //     assert.equal(animalCount.toNumber(), 1);
 
-        //to-do add more checks on fields
-    });
+    //     //to-do add more checks on fields
+    // });
 
     it('successfully adds animal', async () => {
         const initialAnimalCount = await contract.animalCount();
@@ -26,6 +26,13 @@ contract('HibernationCalculator', accounts => {
             BigInt(303611000000000000000),
             BigInt(350494000000000000000)
         );
+
+        console.log(result.logs[0].args);
+
+        const animalFromMapping = await contract.animals("3dfef05b-0b66-450c-a0c6-d3994866f6d5");
+        console.log(animalFromMapping);
+
+        assert.equal(result.logs[0].args.uuid, animalFromMapping.uuid);
         
         assert.equal(result.logs[0].args.uuid, "3dfef05b-0b66-450c-a0c6-d3994866f6d5");
         assert.equal(BigInt(result.logs[0].args.min), BigInt(257658000000000000000));
@@ -35,20 +42,20 @@ contract('HibernationCalculator', accounts => {
         assert.equal(currentAnimalCount.toNumber(), initialAnimalCount.toNumber() + 1);
     });
 
-    it('successfully deletes an animal', async () => {
-        const initialAnimalCount = await contract.animalCount();
-        const result = await contract.deleteAnimal("3dfef05b-0b66-450c-a0c6-d3994866f6d5");
+    // it('successfully deletes an animal', async () => {
+    //     const initialAnimalCount = await contract.animalCount();
+    //     const result = await contract.deleteAnimal("3dfef05b-0b66-450c-a0c6-d3994866f6d5");
 
-        assert.equal(result.logs[0].args.uuid, "3dfef05b-0b66-450c-a0c6-d3994866f6d5");
+    //     assert.equal(result.logs[0].args.uuid, "3dfef05b-0b66-450c-a0c6-d3994866f6d5");
 
-        const currentAnimalCount = await contract.animalCount();
-        assert.equal(currentAnimalCount.toNumber(), initialAnimalCount.toNumber() - 1); 
-    });
+    //     const currentAnimalCount = await contract.animalCount();
+    //     assert.equal(currentAnimalCount.toNumber(), initialAnimalCount.toNumber() - 1); 
+    // });
 
-    it('successfully deletes all animals', async () => {
-        await contract.clearAnimals();
+    // it('successfully deletes all animals', async () => {
+    //     await contract.clearAnimals();
 
-        const currentAnimalCount = await contract.animalCount();
-        assert.equal(currentAnimalCount.toNumber(), 0);
-    });
+    //     const currentAnimalCount = await contract.animalCount();
+    //     assert.equal(currentAnimalCount.toNumber(), 0);
+    // });
 });
