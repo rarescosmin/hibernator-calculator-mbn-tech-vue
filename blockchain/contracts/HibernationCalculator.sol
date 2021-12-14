@@ -76,6 +76,10 @@ contract HibernationCalculator {
         emit AnimalsCleared(true);
     }
 
+    function getAnimalUUIDs() public view returns (string[] memory){
+        return animalKeysArray;
+    }
+
     function initializeContract() private {
         addAnimal(
             "923e1a57-4000-4cb2-8869-cb37e77a357d",

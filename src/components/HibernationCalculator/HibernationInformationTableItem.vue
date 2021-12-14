@@ -32,10 +32,10 @@ export default {
             type: Number
         },
         length: {
-            type: Number
+            type: String
         },
         weight: {
-            type: Number
+            type: String
         },
         resultBadgeStyle: {
             type: Array

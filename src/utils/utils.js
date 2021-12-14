@@ -96,3 +96,10 @@ export const resultStatusMapper = [
     },
 ];
 
+/**
+ * converts wei to eth
+ * @param {*} number 
+ */
+export const valueConverter = (number) => {
+    return parseFloat(number * Math.pow(10, -18)).toFixed(3);
+};
