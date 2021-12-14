@@ -26,13 +26,13 @@
                                 <HibernationInformationTableItem
                                     @remove-table-element="$emit('remove-table-element', tableItem.uuid)"
                                     :index="tableItem.indexKey"
-                                    :length="valueConverter(tableItem.length)"
-                                    :weight="valueConverter(tableItem.weight)"
+                                    :length="weiToEth(tableItem.length)"
+                                    :weight="weiToEth(tableItem.weight)"
                                     :resultBadgeStyle="[resultStatusMapperUtils[tableItem.result].badge]"
                                     :resultText="resultStatusMapperUtils[tableItem.result].text"
-                                    :min="valueConverter(tableItem.min)"
-                                    :avg="valueConverter(tableItem.avg)"
-                                    :max="valueConverter(tableItem.max)"
+                                    :min="weiToEth(tableItem.min)"
+                                    :avg="weiToEth(tableItem.avg)"
+                                    :max="weiToEth(tableItem.max)"
                                     :uuid="tableItem.uuid"/>
                             </tr>
                         </tbody>
@@ -45,7 +45,7 @@
 
 <script>
 import HibernationInformationTableItem from './HibernationInformationTableItem.vue';
-import { resultStatusMapper, valueConverter } from '../../utils/utils';
+import { resultStatusMapper, weiToEth } from '../../utils/utils';
 
 export default {
     name: 'HibernationInformationTable.vue',
@@ -61,7 +61,7 @@ export default {
         onClearAll() {
             this.$emit('clear-all');
         },
-        valueConverter
+        weiToEth
     },
     props: {
         hibernationInformationTableData: {

@@ -20,7 +20,7 @@ import HibernationCalculatorForm from './HibernationCalculatorForm.vue';
 import HibernationInformationTable from './HibernationInformationTable.vue';
 import { turtleStore } from '../../store/store';
 import { computeFactors, testos, resultStatusMapper } from '../../utils/utils';
-import { getAnimals } from '../../store/blockchain';
+import { getAnimals, addAnimal, clearAnimals } from '../../store/blockchain';
 
 export default {
 	name: "HibernationCalculator",
@@ -119,7 +119,7 @@ export default {
         this.hibernationInformationTableData = await getAnimals();
     },
 	methods: {
-		computeButtonHandler(animalInformation) {
+		async computeButtonHandler(animalInformation) {
             const length = animalInformation.length;
             const weight = animalInformation.weight;
 
@@ -132,16 +132,14 @@ export default {
             this.resultWeight = weight;
             this.resultTextStyle = [resultStatusMapper[result].panel];
 
-            const { item, indexKey } = turtleStore.add({
-                min, max, avg, result, length, weight,
-            });
+            const addedAnimal = await addAnimal(min, max, avg, result, length, weight);
 
-            this.hibernationInformationTableData.push({...item, indexKey });
+            this.hibernationInformationTableData.push({...addedAnimal, indexKey: this.hibernationInformationTableData.length });
         },
-        clearAll() {
-            if (Object.keys(turtleStore.measurements()).length > 0) {
+        async clearAll() {
+            if (this.hibernationInformationTableData.length > 0) {
                 if (confirm('Are you sure you want to clear all measurements?\nThis action cannot be undone!')) {
-                    turtleStore.clear();
+                    await clearAnimals();
                     this.hibernationInformationTableData = [];
                 }
             }

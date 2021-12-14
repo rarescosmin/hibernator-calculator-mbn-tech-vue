@@ -100,6 +100,14 @@ export const resultStatusMapper = [
  * converts wei to eth
  * @param {*} number 
  */
-export const valueConverter = (number) => {
+export const weiToEth = (number) => {
     return parseFloat(number * Math.pow(10, -18)).toFixed(3);
+};
+
+/**
+ * converts eth to wei
+ * @param {*} number 
+ */
+ export const ethToWei = (number) => {
+    return BigInt(number * Math.pow(10, 18));
 };

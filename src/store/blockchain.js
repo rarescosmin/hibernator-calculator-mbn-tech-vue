@@ -1,5 +1,6 @@
 import Web3 from 'web3';
 import HibernationCalculatorContractInterface from '../../blockchain/build/contracts/HibernationCalculator.json';
+import { create_UUID, ethToWei } from '../utils/utils';
 
 /**
  * get contract object
@@ -27,6 +28,7 @@ const getAnimalUUIds = async (contract) => {
     return animalUUIDs;
 };
 
+
 /**
  * get animal hibernation information by uuid from contract
  * @param {*} contract 
@@ -34,7 +36,12 @@ const getAnimalUUIds = async (contract) => {
  * @returns 
  */
 const getAnimalByUUID = async (contract, uuid) => {
-    const animal = await contract.methods.animals(uuid).call( { from: process.env.VUE_APP_WEB3_ACCOUNT }, (err, result) => { 
+    const animal = await contract.methods.animals(uuid).call( { from: process.env.VUE_APP_WEB3_ACCOUNT }, (err, result) => {
+        
+        if (err) {
+            alert('Failed to fetch animal by uuid');
+        }
+        
         return (({ uuid, weight, length, result, min, avg, max }) => ({ uuid, weight, length, result, min, avg, max }))(result);
     });
 
@@ -71,4 +78,56 @@ export const getAnimals = async () => {
 
     return animals;
 
+};
+
+export const addAnimal = async (min, max, avg, result, length, weight) => {
+    console.debug('adding animal');
+
+    // get HibernationCalculator contract //
+    const contract = getContract();
+    console.debug('contract obtained');
+    console.debug(contract);
+
+    const addedAnimal = await contract.methods.addAnimal(
+        create_UUID(),
+        ethToWei(length),
+        ethToWei(weight),
+        result,
+        ethToWei(min),
+        ethToWei(avg),
+        ethToWei(max)
+    ).send({
+        from: process.env.VUE_APP_WEB3_ACCOUNT,
+        gas: 3000000
+    }).then(response => {
+        console.debug('animal Added');
+        console.debug(response.events.AnimalAdded);
+        const animal = response.events.AnimalAdded.returnValues;
+        
+        const parsedAnimal = (({ uuid, weight, length, result, min, avg, max }) => ({ uuid, weight, length, result, min, avg, max }))(animal);
+        console.debug('parsed added animal');
+        console.debug(parsedAnimal);
+        return parsedAnimal;
+    });
+
+    console.debug('animal to add');
+    console.debug(addedAnimal);
+    return addedAnimal;
+};
+
+export const clearAnimals = async () => {
+    // get HibernationCalculator contract //
+    const contract = getContract();
+    console.debug('contract obtained');
+    console.debug(contract);
+
+    await contract.methods.clearAnimals()
+    .send({ 
+        from: process.env.VUE_APP_WEB3_ACCOUNT,
+        gas: 6721975 
+    })
+    .then(response => {
+        console.debug('animals cleared');
+        console.debug(response);
+    });
 };
