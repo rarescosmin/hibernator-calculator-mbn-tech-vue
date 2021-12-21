@@ -42,15 +42,19 @@ contract('HibernationCalculator', accounts => {
         assert.equal(currentAnimalCount.toNumber(), initialAnimalCount.toNumber() + 1);
     });
 
-    // it('successfully deletes an animal', async () => {
-    //     const initialAnimalCount = await contract.animalCount();
-    //     const result = await contract.deleteAnimal("3dfef05b-0b66-450c-a0c6-d3994866f6d5");
+    it('successfully deletes an animal', async () => {
+        const initialAnimalCount = await contract.animalCount();
+        console.log('initial animal count');
+        console.log(initialAnimalCount.toNumber());
 
-    //     assert.equal(result.logs[0].args.uuid, "3dfef05b-0b66-450c-a0c6-d3994866f6d5");
+        const result = await contract.deleteAnimal("3dfef05b-0b66-450c-a0c6-d3994866f6d5");
+        console.log(result);
 
-    //     const currentAnimalCount = await contract.animalCount();
-    //     assert.equal(currentAnimalCount.toNumber(), initialAnimalCount.toNumber() - 1); 
-    // });
+        assert.equal(result.logs[0].args.uuid, "3dfef05b-0b66-450c-a0c6-d3994866f6d5");
+
+        const currentAnimalCount = await contract.animalCount();
+        assert.equal(currentAnimalCount.toNumber(), initialAnimalCount.toNumber() - 1); 
+    });
 
     // it('successfully deletes all animals', async () => {
     //     await contract.clearAnimals();

@@ -2,12 +2,19 @@ import Web3 from 'web3';
 import HibernationCalculatorContractInterface from '../../blockchain/build/contracts/HibernationCalculator.json';
 import { create_UUID, ethToWei } from '../utils/utils';
 
+let contract = null;
+
 /**
  * get contract object
  */
-const getContract = () => {
-    const web3 = new Web3(process.env.VUE_APP_WEB3_PROVIDER);
-    const contract = new web3.eth.Contract(HibernationCalculatorContractInterface.abi, process.env.VUE_APP_WEB3_CONTRACT_ADDRESS);
+const getContract = async () => {
+    if (!contract) {
+        const web3 = new Web3(window.ethereum);
+        const netId = await web3.eth.net.getId()
+        const web3Contract = new web3.eth.Contract(HibernationCalculatorContractInterface.abi, HibernationCalculatorContractInterface.networks[netId].address);
+        contract = web3Contract;
+    }
+
     return contract;
 };
 
@@ -57,7 +64,7 @@ const getAnimalByUUID = async (contract, uuid) => {
 export const getAnimals = async () => {
 
     // get HibernationCalculator contract //
-    const contract = getContract();
+    const contract = await getContract();
     console.debug('contract obtained');
     console.debug(contract);
 
@@ -68,9 +75,15 @@ export const getAnimals = async () => {
 
     const animals = [];
 
-    for (const [indexKey, uuid] of animalUUIDs.entries()) {
-        const animal = await getAnimalByUUID(contract, uuid);
-        animals.push({...animal, indexKey});
+    // for (const [indexKey, uuid] of animalUUIDs.entries()) {
+    //     const animal = await getAnimalByUUID(contract, uuid);
+    //     animals.push({...animal, indexKey});
+    // }
+
+    for (let i = 0; i < animalUUIDs.length; i++) {
+        const animal = await getAnimalByUUID(contract, animalUUIDs[i]);
+        const parsedAnimal = (({ uuid, weight, length, result, min, avg, max }) => ({ uuid, weight, length, result, min, avg, max }))(animal);
+        animals.push({ ...parsedAnimal, indexKey: i});
     }
 
     console.log('animals array obtained');
@@ -84,7 +97,7 @@ export const addAnimal = async (min, max, avg, result, length, weight) => {
     console.debug('adding animal');
 
     // get HibernationCalculator contract //
-    const contract = getContract();
+    const contract = await getContract();
     console.debug('contract obtained');
     console.debug(contract);
 
@@ -117,7 +130,7 @@ export const addAnimal = async (min, max, avg, result, length, weight) => {
 
 export const clearAnimals = async () => {
     // get HibernationCalculator contract //
-    const contract = getContract();
+    const contract = await getContract();
     console.debug('contract obtained');
     console.debug(contract);
 
@@ -134,7 +147,7 @@ export const clearAnimals = async () => {
 
 export const deleteAnimal = async (uuid) => {
     // get HibernationCalculator contract //
-    const contract = getContract();
+    const contract = await getContract();
     console.debug('contract obtained');
     console.debug(contract);
 
