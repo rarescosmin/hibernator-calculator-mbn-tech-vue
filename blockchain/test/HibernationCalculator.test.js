@@ -159,11 +159,11 @@ contract('HibernationCalculator', accounts => {
     });
 
     it('tries to delete an inexisting key and expects event with deleted = false', async () => {
-        const initialAnimalCount = await contract.animalCount();
+        const initialAnimalCount = await contract.getAnimalCount();
 
         const unsuccessfullyDeletedAnimal = await contract.deleteAnimalByUUID("XXXXXXXXXXXX");
         const unsuccessfullyDeletedAnimalEvent = unsuccessfullyDeletedAnimal.logs[0].args;
-        const animalCountAfterDeletion = await contract.animalCount();
+        const animalCountAfterDeletion = await contract.getAnimalCount();
 
         assert.equal(initialAnimalCount.toNumber(), animalCountAfterDeletion.toNumber());
         assert.equal(unsuccessfullyDeletedAnimalEvent.uuid, "XXXXXXXXXXXX", "uuid of deletion doesn\'t match");
@@ -233,7 +233,7 @@ contract('HibernationCalculator', accounts => {
 
         const animalsCleared = await contract.clearAnimals();
         const animalsClearedEvent = animalsCleared.logs[0].args;
-        const animalCountAfterClearence = await contract.animalCount();
+        const animalCountAfterClearence = await contract.getAnimalCount();
         assert.equal(animalCountAfterClearence.toNumber(), 0, "animals were not all cleared");
         assert.equal(animalsClearedEvent.deleted, true, "cleared animals event should be true");
     });

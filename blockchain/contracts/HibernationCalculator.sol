@@ -129,6 +129,7 @@ contract HibernationCalculator {
     function remove(string memory key) private {
         if (!animals.inserted[key]) {
             emit AnimalDeleted(key, false);
+            return;
         }
 
         delete animals.inserted[key];
