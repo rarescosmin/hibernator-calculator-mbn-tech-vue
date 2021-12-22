@@ -134,13 +134,13 @@ export default {
 
             const addedAnimal = await addAnimal(min, max, avg, result, shellLength, weight);
 
-            this.hibernationInformationTableData.push({...addedAnimal, indexKey: this.hibernationInformationTableData.length });
+            this.hibernationInformationTableData = await getAnimals();
         },
         async clearAll() {
             if (this.hibernationInformationTableData.length > 0) {
                 if (confirm('Are you sure you want to clear all measurements?\nThis action cannot be undone!')) {
                     await clearAnimals();
-                    this.hibernationInformationTableData = [];
+                    this.hibernationInformationTableData = await getAnimals();
                 }
             }
         },
