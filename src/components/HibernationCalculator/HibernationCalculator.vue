@@ -120,19 +120,19 @@ export default {
     },
 	methods: {
 		async computeButtonHandler(animalInformation) {
-            const length = animalInformation.length;
+            const shellLength = animalInformation.shellLength;
             const weight = animalInformation.weight;
 
             
-            const { min, max, avg } = computeFactors(length);
+            const { min, max, avg } = computeFactors(shellLength);
             const result = testos(length, weight);
 
             this.resultText = resultStatusMapper[result].text;
-            this.resultLength = length;
+            this.resultLength = shellLength;
             this.resultWeight = weight;
             this.resultTextStyle = [resultStatusMapper[result].panel];
 
-            const addedAnimal = await addAnimal(min, max, avg, result, length, weight);
+            const addedAnimal = await addAnimal(min, max, avg, result, shellLength, weight);
 
             this.hibernationInformationTableData.push({...addedAnimal, indexKey: this.hibernationInformationTableData.length });
         },

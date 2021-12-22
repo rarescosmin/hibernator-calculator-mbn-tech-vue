@@ -1,6 +1,6 @@
 <template>
     <th scope="row">{{ index + 1 }}</th>
-    <td style="text-align: center">{{ length }}cm</td>
+    <td style="text-align: center">{{ shellLength }}cm</td>
     <td style="text-align: center">{{ weight }}g</td>
     <td>
         <span :class="resultBadgeStyle">{{ resultText }}</span>
@@ -31,7 +31,7 @@ export default {
         index: {
             type: Number
         },
-        length: {
+        shellLength: {
             type: String
         },
         weight: {

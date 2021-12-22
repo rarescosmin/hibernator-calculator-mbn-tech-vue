@@ -26,7 +26,7 @@
                                 <HibernationInformationTableItem
                                     @remove-table-element="$emit('remove-table-element', tableItem.uuid)"
                                     :index="tableItem.indexKey"
-                                    :length="weiToEth(tableItem.length)"
+                                    :shellLength="weiToEth(tableItem.shellLength)"
                                     :weight="weiToEth(tableItem.weight)"
                                     :resultBadgeStyle="[resultStatusMapperUtils[tableItem.result].badge]"
                                     :resultText="resultStatusMapperUtils[tableItem.result].text"

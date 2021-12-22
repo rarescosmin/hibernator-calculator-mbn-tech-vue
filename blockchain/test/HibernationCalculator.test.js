@@ -14,7 +14,7 @@ contract('HibernationCalculator', accounts => {
 
         const expectedAnimalData = {
             uuid: "923e1a57-4000-4cb2-8869-cb37e77a357d",
-            length: 12000000000000000000,
+            shellLength: 12000000000000000000,
             weight: 11000000000000000000,
             result: 3,
             min: 257658000000000000000,
@@ -23,7 +23,7 @@ contract('HibernationCalculator', accounts => {
         }
         const initialAnimal = await contract.getAnimalByUUID("923e1a57-4000-4cb2-8869-cb37e77a357d");
         assert.equal(initialAnimal.uuid, expectedAnimalData.uuid, "uuid not the same"),
-        assert.equal(initialAnimal._length, expectedAnimalData.length, "length not the same");
+        assert.equal(initialAnimal.shellLength, expectedAnimalData.shellLength, "length not the same");
         assert.equal(initialAnimal.weight, expectedAnimalData.weight, "weight not the same");
         assert.equal(initialAnimal.result, expectedAnimalData.result, "result not the same");
         assert.equal(initialAnimal.min, expectedAnimalData.min, "min not the same");
@@ -36,7 +36,7 @@ contract('HibernationCalculator', accounts => {
 
         const animalDataToAdd = {
             uuid: "8cd18961-ece3-415e-8fdd-490b321a277d",
-            length: BigInt(11000000000000000000),
+            shellLength: BigInt(11000000000000000000),
             weight: BigInt(12000000000000000000),
             result: 1,
             min: BigInt(267158000000000000000),
@@ -46,7 +46,7 @@ contract('HibernationCalculator', accounts => {
 
         await contract.addAnimal(
             animalDataToAdd.uuid,
-            animalDataToAdd.length,
+            animalDataToAdd.shellLength,
             animalDataToAdd.weight,
             animalDataToAdd.result,
             animalDataToAdd.min,
@@ -59,7 +59,7 @@ contract('HibernationCalculator', accounts => {
         
         const addedAnimal = await contract.getAnimalByUUID(animalDataToAdd.uuid);
         assert.equal(addedAnimal.uuid, animalDataToAdd.uuid, "uuid not the same"),
-        assert.equal(addedAnimal._length, animalDataToAdd.length, "length not the same");
+        assert.equal(addedAnimal.shellLength, animalDataToAdd.shellLength, "length not the same");
         assert.equal(addedAnimal.weight, animalDataToAdd.weight, "weight not the same");
         assert.equal(addedAnimal.result, animalDataToAdd.result, "result not the same");
         assert.equal(addedAnimal.min, animalDataToAdd.min, "min not the same");
@@ -73,7 +73,7 @@ contract('HibernationCalculator', accounts => {
         const animalsToAdd = {
             firstAnimal: {
                 uuid: "f355f843-d935-4e27-82f3-1d6e652f62bf",
-                length: BigInt(11000000000000000000),
+                shellLength: BigInt(11000000000000000000),
                 weight: BigInt(12000000000000000000),
                 result: 1,
                 min: BigInt(267158000000000000000),
@@ -82,7 +82,7 @@ contract('HibernationCalculator', accounts => {
             },
             secondAnimal: {
                 uuid: "b57f4aa3-ae65-4e6e-91c0-92a7f130a841",
-                length: BigInt(11000000000000000000),
+                shellLength: BigInt(11000000000000000000),
                 weight: BigInt(12000000000000000000),
                 result: 1,
                 min: BigInt(267158000000000000000),
@@ -91,7 +91,7 @@ contract('HibernationCalculator', accounts => {
             },
             thirdAnimal: {
                 uuid: "185de3b2-2aec-4046-b7ce-1c6d5c6bd6db",
-                length: BigInt(11000000000000000000),
+                shellLength: BigInt(11000000000000000000),
                 weight: BigInt(12000000000000000000),
                 result: 1,
                 min: BigInt(267158000000000000000),
@@ -102,7 +102,7 @@ contract('HibernationCalculator', accounts => {
 
         await contract.addAnimal(
             animalsToAdd.firstAnimal.uuid,
-            animalsToAdd.firstAnimal.length,
+            animalsToAdd.firstAnimal.shellLength,
             animalsToAdd.firstAnimal.weight,
             animalsToAdd.firstAnimal.result,
             animalsToAdd.firstAnimal.min,
@@ -112,7 +112,7 @@ contract('HibernationCalculator', accounts => {
 
         await contract.addAnimal(
             animalsToAdd.secondAnimal.uuid,
-            animalsToAdd.secondAnimal.length,
+            animalsToAdd.secondAnimal.shellLength,
             animalsToAdd.secondAnimal.weight,
             animalsToAdd.secondAnimal.result,
             animalsToAdd.secondAnimal.min,
@@ -122,7 +122,7 @@ contract('HibernationCalculator', accounts => {
 
         await contract.addAnimal(
             animalsToAdd.thirdAnimal.uuid,
-            animalsToAdd.thirdAnimal.length,
+            animalsToAdd.thirdAnimal.shellLength,
             animalsToAdd.thirdAnimal.weight,
             animalsToAdd.thirdAnimal.result,
             animalsToAdd.thirdAnimal.min,
@@ -174,7 +174,7 @@ contract('HibernationCalculator', accounts => {
         const animalsToAdd = {
             firstAnimal: {
                 uuid: "f355f843-d935-4e27-82f3-1d6e652f62bf",
-                length: BigInt(11000000000000000000),
+                shellLength: BigInt(11000000000000000000),
                 weight: BigInt(12000000000000000000),
                 result: 1,
                 min: BigInt(267158000000000000000),
@@ -183,7 +183,7 @@ contract('HibernationCalculator', accounts => {
             },
             secondAnimal: {
                 uuid: "b57f4aa3-ae65-4e6e-91c0-92a7f130a841",
-                length: BigInt(11000000000000000000),
+                shellLength: BigInt(11000000000000000000),
                 weight: BigInt(12000000000000000000),
                 result: 1,
                 min: BigInt(267158000000000000000),
@@ -192,7 +192,7 @@ contract('HibernationCalculator', accounts => {
             },
             thirdAnimal: {
                 uuid: "185de3b2-2aec-4046-b7ce-1c6d5c6bd6db",
-                length: BigInt(11000000000000000000),
+                shellLength: BigInt(11000000000000000000),
                 weight: BigInt(12000000000000000000),
                 result: 1,
                 min: BigInt(267158000000000000000),
@@ -203,7 +203,7 @@ contract('HibernationCalculator', accounts => {
 
         await contract.addAnimal(
             animalsToAdd.firstAnimal.uuid,
-            animalsToAdd.firstAnimal.length,
+            animalsToAdd.firstAnimal.shellLength,
             animalsToAdd.firstAnimal.weight,
             animalsToAdd.firstAnimal.result,
             animalsToAdd.firstAnimal.min,
@@ -213,7 +213,7 @@ contract('HibernationCalculator', accounts => {
 
         await contract.addAnimal(
             animalsToAdd.secondAnimal.uuid,
-            animalsToAdd.secondAnimal.length,
+            animalsToAdd.secondAnimal.shellLength,
             animalsToAdd.secondAnimal.weight,
             animalsToAdd.secondAnimal.result,
             animalsToAdd.secondAnimal.min,
@@ -223,7 +223,7 @@ contract('HibernationCalculator', accounts => {
 
         await contract.addAnimal(
             animalsToAdd.thirdAnimal.uuid,
-            animalsToAdd.thirdAnimal.length,
+            animalsToAdd.thirdAnimal.shellLength,
             animalsToAdd.thirdAnimal.weight,
             animalsToAdd.thirdAnimal.result,
             animalsToAdd.thirdAnimal.min,

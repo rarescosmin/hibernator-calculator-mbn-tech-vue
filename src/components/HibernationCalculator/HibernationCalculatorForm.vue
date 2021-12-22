@@ -17,7 +17,7 @@
                                     id="defaultLength" 
                                     class="form-control" 
                                     aria-label="Shell length (cm)"
-                                    v-model="length" 
+                                    v-model="shellLength" 
                                     required />
                             </div>
                             <div class="md-form">
@@ -73,24 +73,24 @@ export default {
         onCompute(event) {
             event.preventDefault();
 
-            if (!this.length || !this.weight) {
+            if (!this.shellLength || !this.weight) {
                 alert('Shell Length and Animal Weight can not be empty');
                 return
             }
 
             this.displayResultCard = true;
-            this.$emit('compute', { length: this.length, weight: this.weight });
+            this.$emit('compute', { shellLength: this.shellLength, weight: this.weight });
         },
         onReset() {
             this.displayResultCard = false;
-            this.length = null;
+            this.shellLength = null;
             this.weight = null;
         }
     },
     data() {
         return {
             displayResultCard: false,
-            length: null,
+            shellLength: null,
             weight: null
         }
     },
