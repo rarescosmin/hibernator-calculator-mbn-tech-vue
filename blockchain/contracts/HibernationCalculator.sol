@@ -33,7 +33,8 @@ contract HibernationCalculator {
     );
 
     event AnimalDeleted(
-        string uuid
+        string uuid,
+        bool deleted
     );
 
     event AnimalsCleared(
@@ -59,10 +60,6 @@ contract HibernationCalculator {
         uint avg,
         uint max
     ) public {
-        // animals[uuid] = HibernationInformation(uuid, length, weight, result, min, avg, max);
-        // animalKeysArray.push(uuid);
-        // animalCount ++;
-
         HibernationInformation memory hibernationData = HibernationInformation(
             uuid,
             length,
@@ -74,25 +71,47 @@ contract HibernationCalculator {
         );
 
         set(uuid, hibernationData);
-
         emit AnimalAdded(uuid, length, weight, result, min, avg, max);
     }
 
+    function deleteAnimalByUUID(string memory uuid) public {
+        bool isAnimalDeleted = remove(uuid);
 
+        if (isAnimalDeleted) {
+            emit AnimalDeleted(uuid, true);
+        } else {
+            emit AnimalDeleted(uuid, false);
+        }
+    }
 
-    function get(string memory key) public view returns (HibernationInformation memory) {
+    function clearAnimals() public {
+        for (uint i = 0; i < animals.keys.length; i++) {
+            deleteAnimalByUUID(animals.keys[i]);
+        }
+        emit AnimalsCleared(true);
+    }
+
+    function getAnimalCount() public view returns (uint) {
+        return size();
+    }
+
+    function getAnimalByUUID(string memory uuid) public view returns (HibernationInformation memory) {
+        return get(uuid);
+    }
+
+    function get(string memory key) private view returns (HibernationInformation memory) {
         return animals.values[key];
     }
 
-    function getKeyAtIndex(uint index) public view returns (string memory) {
+    function getKeyAtIndex(uint index) private view returns (string memory) {
         return animals.keys[index];
     }
 
-    function size() public view returns (uint) {
+    function size() private view returns (uint) {
         return animals.keys.length;
     }
 
-    function set(string memory key, HibernationInformation memory val) public {
+    function set(string memory key, HibernationInformation memory val) private {
         if (animals.inserted[key]) {
             animals.values[key] = val;
         } else {
@@ -103,9 +122,9 @@ contract HibernationCalculator {
         }
     }
 
-    function remove(string memory key) public {
+    function remove(string memory key) private returns (bool){
         if (!animals.inserted[key]) {
-            return;
+            return false;
         }
 
         delete animals.inserted[key];
@@ -120,6 +139,8 @@ contract HibernationCalculator {
 
         animals.keys[index] = lastKey;
         animals.keys.pop();
+
+        return true;
     }
 
     function initializeContract() private {
