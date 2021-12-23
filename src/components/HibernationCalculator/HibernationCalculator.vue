@@ -69,13 +69,6 @@ export default {
         async onRemoveTableElement(uuid) {
             await deleteAnimal(uuid);
             this.hibernationInformationTableData = await getAnimals();
-        },
-        syncTableDataWithStore() {
-            const measurements = turtleStore.measurements();
-            this.hibernationInformationTableData = [];
-            Object.keys(measurements).forEach((key, indexKey) => {
-                this.hibernationInformationTableData.push({ ...measurements[key], indexKey });
-            });
         }
 	}
 };
