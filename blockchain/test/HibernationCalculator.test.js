@@ -170,71 +170,71 @@ contract('HibernationCalculator', accounts => {
         assert.equal(unsuccessfullyDeletedAnimalEvent.deleted, false, "deletion event should be false for inexisting animal");
     });
 
-    // it('successfully adds three animals and deletes all animals', async () => {
-    //     const animalsToAdd = {
-    //         firstAnimal: {
-    //             uuid: "f355f843-d935-4e27-82f3-1d6e652f62bf",
-    //             shellLength: BigInt(11000000000000000000),
-    //             weight: BigInt(12000000000000000000),
-    //             result: 1,
-    //             min: BigInt(267158000000000000000),
-    //             avg: BigInt(203511000000000000000),
-    //             max: BigInt(250496000000000000000)
-    //         },
-    //         secondAnimal: {
-    //             uuid: "b57f4aa3-ae65-4e6e-91c0-92a7f130a841",
-    //             shellLength: BigInt(11000000000000000000),
-    //             weight: BigInt(12000000000000000000),
-    //             result: 1,
-    //             min: BigInt(267158000000000000000),
-    //             avg: BigInt(203511000000000000000),
-    //             max: BigInt(250496000000000000000)
-    //         },
-    //         thirdAnimal: {
-    //             uuid: "185de3b2-2aec-4046-b7ce-1c6d5c6bd6db",
-    //             shellLength: BigInt(11000000000000000000),
-    //             weight: BigInt(12000000000000000000),
-    //             result: 1,
-    //             min: BigInt(267158000000000000000),
-    //             avg: BigInt(203511000000000000000),
-    //             max: BigInt(250496000000000000000)
-    //         }
-    //     };
+    it('successfully adds three animals and then clears them all', async () => {
+        const animalsToAdd = {
+            firstAnimal: {
+                uuid: "f355f843-d935-4e27-82f3-1d6e652f62bf",
+                shellLength: BigInt(11000000000000000000),
+                weight: BigInt(12000000000000000000),
+                result: 1,
+                min: BigInt(267158000000000000000),
+                avg: BigInt(203511000000000000000),
+                max: BigInt(250496000000000000000)
+            },
+            secondAnimal: {
+                uuid: "b57f4aa3-ae65-4e6e-91c0-92a7f130a841",
+                shellLength: BigInt(11000000000000000000),
+                weight: BigInt(12000000000000000000),
+                result: 1,
+                min: BigInt(267158000000000000000),
+                avg: BigInt(203511000000000000000),
+                max: BigInt(250496000000000000000)
+            },
+            thirdAnimal: {
+                uuid: "185de3b2-2aec-4046-b7ce-1c6d5c6bd6db",
+                shellLength: BigInt(11000000000000000000),
+                weight: BigInt(12000000000000000000),
+                result: 1,
+                min: BigInt(267158000000000000000),
+                avg: BigInt(203511000000000000000),
+                max: BigInt(250496000000000000000)
+            }
+        };
 
-    //     await contract.addAnimal(
-    //         animalsToAdd.firstAnimal.uuid,
-    //         animalsToAdd.firstAnimal.shellLength,
-    //         animalsToAdd.firstAnimal.weight,
-    //         animalsToAdd.firstAnimal.result,
-    //         animalsToAdd.firstAnimal.min,
-    //         animalsToAdd.firstAnimal.avg,
-    //         animalsToAdd.firstAnimal.max
-    //     );
+        await contract.addAnimal(
+            animalsToAdd.firstAnimal.uuid,
+            animalsToAdd.firstAnimal.shellLength,
+            animalsToAdd.firstAnimal.weight,
+            animalsToAdd.firstAnimal.result,
+            animalsToAdd.firstAnimal.min,
+            animalsToAdd.firstAnimal.avg,
+            animalsToAdd.firstAnimal.max
+        );
 
-    //     await contract.addAnimal(
-    //         animalsToAdd.secondAnimal.uuid,
-    //         animalsToAdd.secondAnimal.shellLength,
-    //         animalsToAdd.secondAnimal.weight,
-    //         animalsToAdd.secondAnimal.result,
-    //         animalsToAdd.secondAnimal.min,
-    //         animalsToAdd.secondAnimal.avg,
-    //         animalsToAdd.secondAnimal.max
-    //     );
+        await contract.addAnimal(
+            animalsToAdd.secondAnimal.uuid,
+            animalsToAdd.secondAnimal.shellLength,
+            animalsToAdd.secondAnimal.weight,
+            animalsToAdd.secondAnimal.result,
+            animalsToAdd.secondAnimal.min,
+            animalsToAdd.secondAnimal.avg,
+            animalsToAdd.secondAnimal.max
+        );
 
-    //     await contract.addAnimal(
-    //         animalsToAdd.thirdAnimal.uuid,
-    //         animalsToAdd.thirdAnimal.shellLength,
-    //         animalsToAdd.thirdAnimal.weight,
-    //         animalsToAdd.thirdAnimal.result,
-    //         animalsToAdd.thirdAnimal.min,
-    //         animalsToAdd.thirdAnimal.avg,
-    //         animalsToAdd.thirdAnimal.max
-    //     );
+        await contract.addAnimal(
+            animalsToAdd.thirdAnimal.uuid,
+            animalsToAdd.thirdAnimal.shellLength,
+            animalsToAdd.thirdAnimal.weight,
+            animalsToAdd.thirdAnimal.result,
+            animalsToAdd.thirdAnimal.min,
+            animalsToAdd.thirdAnimal.avg,
+            animalsToAdd.thirdAnimal.max
+        );
 
-    //     const animalsCleared = await contract.clearAnimals();
-    //     const animalsClearedEvent = animalsCleared.logs[0].args;
-    //     const animalCountAfterClearence = await contract.getAnimalCount();
-    //     assert.equal(animalCountAfterClearence.toNumber(), 0, "animals were not all cleared");
-    //     assert.equal(animalsClearedEvent.deleted, true, "cleared animals event should be true");
-    // });
+        const animalsCleared = await contract.clearAnimals();
+        const animalsClearedEvent = animalsCleared.logs[0].args;
+        const animalCountAfterClearence = await contract.getAnimalCount();
+        assert.equal(animalCountAfterClearence.toNumber(), 0, "animals were not all cleared");
+        assert.equal(animalsClearedEvent.deleted, true, "cleared animals event should be true");
+    });
 });

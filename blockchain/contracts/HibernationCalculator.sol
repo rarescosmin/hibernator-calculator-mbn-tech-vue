@@ -41,16 +41,13 @@ contract HibernationCalculator {
         bool deleted
     );
 
-    //mapping(string => HibernationInformation) public animals;
-
     Map private animals;
-
-    //string[] public animalKeysArray;
 
     constructor() {
         initializeContract();
     }
 
+    // public methods //
     function addAnimal(
         string memory uuid,
         uint shellLength,
@@ -79,8 +76,9 @@ contract HibernationCalculator {
     }
 
     function clearAnimals() public {
-        for (uint i = 0; i < size(); i++) {
-            remove(getKeyAtIndex(i));
+        string[] memory copyKeysArray = animals.keys;
+        for (uint i = 0; i < copyKeysArray.length; i++) {
+            remove(copyKeysArray[i]);
         }
         emit AnimalsCleared(true);
     }
@@ -95,6 +93,10 @@ contract HibernationCalculator {
         return animalArray;
     }
 
+    function getAnimalUUIDs() public view returns (string[] memory) {
+        return animals.keys;
+    }
+
     function getAnimalCount() public view returns (uint) {
         return size();
     }
@@ -103,6 +105,8 @@ contract HibernationCalculator {
         return get(uuid);
     }
 
+
+    // private methods //
     function get(string memory key) private view returns (HibernationInformation memory) {
         return animals.values[key];
     }
@@ -135,14 +139,16 @@ contract HibernationCalculator {
         delete animals.inserted[key];
         delete animals.values[key];
 
-        uint index = animals.indexOf[key];
-        uint lastIndex = animals.keys.length - 1;
-        string memory lastKey = animals.keys[lastIndex];
+        uint indexOfKeyToDelete = animals.indexOf[key];
+        uint lastIndexInKeysArray = animals.keys.length - 1;
 
-        animals.indexOf[lastKey] = index;
+
+        string memory lastKey = animals.keys[lastIndexInKeysArray];
+
+        animals.indexOf[lastKey] = indexOfKeyToDelete;
         delete animals.indexOf[key];
 
-        animals.keys[index] = lastKey;
+        animals.keys[indexOfKeyToDelete] = lastKey;
         animals.keys.pop();
 
         emit AnimalDeleted(key, true);
