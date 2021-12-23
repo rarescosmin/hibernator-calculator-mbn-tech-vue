@@ -79,8 +79,8 @@ contract HibernationCalculator {
     }
 
     function clearAnimals() public {
-        for (uint i = 0; i < animals.keys.length; i++) {
-            remove(animals.keys[i]);
+        for (uint i = 0; i < size(); i++) {
+            remove(getKeyAtIndex(i));
         }
         emit AnimalsCleared(true);
     }
