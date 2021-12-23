@@ -18,7 +18,6 @@
 <script>
 import HibernationCalculatorForm from './HibernationCalculatorForm.vue';
 import HibernationInformationTable from './HibernationInformationTable.vue';
-import { turtleStore } from '../../store/store';
 import { computeFactors, testos, resultStatusMapper } from '../../utils/utils';
 import { getAnimals, addAnimal, clearAnimals, deleteAnimal } from '../../store/blockchain';
 
