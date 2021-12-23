@@ -3,8 +3,6 @@ pragma solidity ^0.8.10;
 
 contract HibernationCalculator {
     
-    uint public animalCount = 0;
-
     struct HibernationInformation {
         string uuid;
         uint shellLength;
