@@ -19,23 +19,6 @@ const getContract = async () => {
 };
 
 /**
- * get animal UUIDs from contract
- * @param {*} contract 
- */
-const getAnimalUUIds = async (contract) => {
-    const animalUUIDs = await contract.methods.getAnimalUUIDs().call({ from: process.env.VUE_APP_WEB3_ACCOUNT }, (err, result) => {
-
-        if (err) {
-            alert('Failed to fetch animal uuids');
-        }
-
-        return result;
-    });
-
-    return animalUUIDs;
-};
-
-/**
  * get animal hibernation information array from blockchain to be rendered on application load
  */
 export const getAnimals = async () => {
@@ -106,34 +89,15 @@ export const clearAnimals = async () => {
     console.debug('contract obtained');
     console.debug(contract);
 
-    // await contract.methods.clearAnimals()
-    // .send({ 
-    //     from: process.env.VUE_APP_WEB3_ACCOUNT,
-    //     gas: 3000000 
-    // })
-    // .then(response => {
-    //     console.debug('animals cleared');
-    //     console.debug(response);
-    // });
-
-    const animalUUIDs = await contract.methods.getAnimalUUIDs().call( { from: process.env.VUE_APP_WEB3_ACCOUNT }, (err, result) => {
-        
-        if (err) {
-            alert('Failed to fetch animals');
-            return [];
-        }
-
-        return result;
+    await contract.methods.clearAnimals()
+    .send({ 
+        from: process.env.VUE_APP_WEB3_ACCOUNT,
+        gas: 3000000 
+    })
+    .then(response => {
+        console.debug('animals cleared');
+        console.debug(response);
     });
-
-    for (const uuid of animalUUIDs) {
-        await deleteAnimal(uuid);
-    }
-
-    console.log('animalUUIDs are');
-    console.log(animalUUIDs);
-
-
 };
 
 export const deleteAnimal = async (uuid) => {
