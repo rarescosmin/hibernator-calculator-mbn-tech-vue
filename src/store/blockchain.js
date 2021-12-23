@@ -8,14 +8,18 @@ let contractObject = null;
  * get contract object
  */
 const getContract = async () => {
-    if (!contractObject) {
-        const web3 = new Web3(window.ethereum);
-        const netId = await web3.eth.net.getId()
-        const web3Contract = new web3.eth.Contract(HibernationCalculatorContractInterface.abi, HibernationCalculatorContractInterface.networks[netId].address);
-        contractObject = web3Contract;
+    if(typeof window.ethereum!=='undefined'){
+        if (!contractObject) {
+            const web3 = new Web3(window.ethereum);
+            const netId = await web3.eth.net.getId()
+            const web3Contract = new web3.eth.Contract(HibernationCalculatorContractInterface.abi, HibernationCalculatorContractInterface.networks[netId].address);
+            contractObject = web3Contract;
+        }
+        return contractObject;
+    } else {
+        alert('Metamask issue. Ethereum window object undefined');
+        return {};
     }
-
-    return contractObject;
 };
 
 /**
